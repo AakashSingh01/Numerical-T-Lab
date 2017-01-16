@@ -1,0 +1,53 @@
+#include<stdio.h>
+#include<math.h>
+#include<string.h>
+void main()
+{
+	float h, y[100],a,b,x[100],k,m,n,p,q;
+	int i,j;
+	printf(" Solving Using FORWARD EULER  ");
+	do
+	{
+	printf("\n\n\n\nThe Diffrential equation y'=f(x,y) \n\n1) y'= m.(x^p).(y^q) \n\n2) y'= m.(x^p) + n.(y^q)\n");
+	printf("\nEnter choice (1-2) : ");
+	scanf("%d",&j);
+	if(j==1)
+		{
+			printf("\nEnter the function parameters m , p , q \n");
+			scanf("%f %f %f", &m, &p, &q);
+		}
+	else
+		{
+			printf("\nEnter the function parameters m , n , p , q \n");
+			scanf("%f %f %f %f", &m, &n, &p, &q);
+		} 
+	printf(" \n\nInput h , [a,b] , y[0] \n");
+	scanf("%f %f %f %f", &h, &a, &b, &y[0]);
+	k=((b-a)/h);
+	for(i=0;i<=int(k);i++)
+		{
+		 	x[i]=a+(i*h);
+		}
+	if(j==1)
+		{
+			for(i=0;i<int(k);i++)
+				{
+					y[i+1]=y[i]+(h*(m*pow(x[i],p)*pow(y[i],q)));
+				}
+			printf("the solution of the IVP is \n ( %f , %f  )",x[int(k)],y[int(k)]);
+		}
+	else
+		{
+			for(i=0;i<int(k);i++)
+				{
+					y[i+1]=y[i]+(h*(m*pow(x[i],p)+(n*pow(y[i],q))));
+				}
+			printf("the solution of the IVP is \n ( %f , %f  )",x[int(k)],y[int(k)]);
+		}
+	printf("\n \nDo you want to continue (y/n) : ");
+	getchar();
+	}while(getchar()=='y');
+}
+	
+		
+			

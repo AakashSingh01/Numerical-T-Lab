@@ -1,0 +1,40 @@
+/*program to calculate the function values of u'=t+u at nodal points by Euler's Predictor-Corrector
+ method*/
+ #include<stdio.h>
+ #include<conio.h>
+ 
+ int main()
+ {
+
+    float h=0.2,t=0;
+    double u0=1,u1p,u1c,f0,f1,u;
+    int g=0,n=1;
+    
+    while(t<0.4)
+    {
+                f0=t+u0;
+                u1p=u0+h*f0;
+                
+                while(!g)
+                {
+                         f1=(t+h)+u1p;
+                         u1c=u0+(h/2)*(f0+f1);
+                         u=u1c-u1p;
+                         if(u<0)
+                                u=-u;
+                         if(u<1e-5)
+                                   break;
+                         u1p=u1c;
+                         n++;
+                }
+                printf("\n\n u(%.2f)=%f, after %d iterations",t+h,u1c,n);
+                u0=u1c;
+                t=t+h;
+                n=1;
+    }
+    getch();
+    return 0;
+}
+                
+                
+                
