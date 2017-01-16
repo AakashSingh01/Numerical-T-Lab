@@ -1,0 +1,53 @@
+/* program to calculate u1,u2 of u'=sqrt(u) by fourth order explicit R-K method */
+/coding in C/
+
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+#include<math.h>
+
+int main()
+{
+    float t=0,t1;
+    float h;
+    double u=1,u1,f,a,sum=0;
+    int i;
+    while(t<0.6)
+    {
+                h=0;
+                a=0;
+                for(i=1;i<=4;++i) /*loop to calculate the sum k1+2*k2+2*k3+k4 */
+                {
+                                 if(i!=4)
+                                 {
+                                         u1=u+a/2;
+                                         t1=t+h/2;
+                                 }
+                                 else
+                                 {
+                                     u1=u+a;
+                                     t1=t+h;
+                                 }
+                                 f=sqrt(u1);
+                                 h=0.2;
+                                 a=h*f;
+                                 printf("\n k%d=%f",i,a);
+                                 if(i==2 || i==3)
+                                         sum=sum+2*a;
+                                 else sum=sum+a;
+                }
+                u1=u+sum/6;
+                printf("\n\n u(%.2f)=%f\n",t+h,u1);
+                t=t+h;
+                u=u1;
+                sum=0;
+    }
+    getch();
+    return 0;
+}
+
+
+                                 
+
+
+

@@ -1,0 +1,100 @@
+/program to solve the IVP by backward euler method for the function y' = m.(x^p).(y^q)/
+/coding done in C/
+/precision of the order 0.0001/
+
+#include<stdio.h>
+#include<math.h>
+void main()
+{
+	float h,y[100],x[100],k,a,b,t,m,n,p,q;
+	int i,j;
+	printf(" Solving by using BACKWARD EULER ");
+	do
+	{
+	printf("\n\n\n\nThe Diffrential equation y'=f(x,y) \n\n1) y'= m.(x^p).(y^q) \n\n2) y'= m.(x^p) + n.(y^q)\n");
+	printf("\nEnter choice (1-2) : ");
+	scanf("%d",&j);
+	if(j==1)
+		{
+			printf("\nEnter the function parameters m , p , q \n");
+			scanf("%f %f %f", &m, &p, &q);
+		}
+	else
+		{
+			printf("\nEnter the function parameters m , n , p , q \n");
+			scanf("%f %f %f %f", &m, &n, &p, &q);
+		} 
+	printf(" \n \nInput h , [a,b], y[0] \n");
+	scanf("%f %f %f %f",&h, &a, &b, &y[0]);
+	k= (b-a)/h;
+	for(i=0;i<=int(k);i++)
+		{
+			x[i]=a+(i*h);
+		}
+	if(j==1)
+		{
+			for(i=0;i<int(k);i++)
+				{
+					if(q!=0)
+					{
+						t=y[i];
+						for(;;)
+							{
+								float t1=t;
+								t=t-((t-(m*h*pow(x[i+1],p))*pow(t,q)-y[i])/(1-(m*h*q*pow(x[i+1],p)*pow(t,q-1))));
+								if((t1-t)<.0001&&(t1-t)>-.0001)
+								break;
+							}
+						y[i+1]=t;
+					}
+					else
+					{
+						t=y[i];
+						for(;;)
+							{
+								float t1=t;
+								t=t-((t-(m*h*pow(x[i+1],p))-y[i])/(1-(m*h*pow(x[i+1],p))));
+								if((t1-t)<.0001&&(t1-t)>-.0001)
+								break;
+							}
+						y[i+1]=t;
+					}
+				}
+			printf(" the solution of the IVP is: ( %f , %f )",x[int(k)],y[int(k)]);
+		}
+	else
+		{
+			for(i=0;i<int(k);i++)
+				{
+					if(q!=0)
+					{
+						t=y[i];	
+						for(;;)
+							{
+								float t1=t;
+								t=t-((t-(n*h)*pow(t,q)-y[i]-(m*h)*pow(x[i+1],p))/(1-(n*h*q*pow(t,q-1))));
+								if((t1-t)<.0001&&(t1-t)>-.0001)
+								break;
+							}
+						y[i+1]=t;
+					}
+					else
+					{
+						t=y[i];	
+						for(;;)
+							{
+								float t1=t;
+								t=t-((t-(n*h)*pow(t,q)-y[i]-(m*h)*pow(x[i+1],p))/(1-(n*h)));
+								if((t1-t)<.0001&&(t1-t)>-.0001)
+								break;
+							}
+						y[i+1]=t;
+					}
+				}
+			printf(" the solution of the IVP is: ( %f , %f )",x[int(k)],y[int(k)]);
+		}
+	printf("\n \nDo you want to continue (y/n) : ");
+	getchar();
+	}while(getchar()=='y');
+}
+	

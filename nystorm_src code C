@@ -1,0 +1,56 @@
+/program using nystrom method/
+/coding in C/
+/coded by Vivek Chowdhary - 06CH1035/
+
+
+#include<stdio.h>
+#include<math.h>
+void main()
+{
+	float h,a,b,x[100],y[100],k,p,q,m,n;
+	int i,j;
+	printf("Solving using NYSTORM method ");
+	do
+	{
+	printf("\n\n\nThe Diffrential equation y'=f(x,y) \n\n1) y'= m.(x^p).(y^q) \n\n2) y'= m.(x^p) + n.(y^q)\n");
+	printf("\nEnter choice (1-2) : ");
+	scanf("%d",&j);
+	if(j==1)
+		{
+			printf("\nEnter the function parameters m , p , q \n");
+			scanf("%f %f %f", &m, &p, &q);
+		}
+	else
+		{
+			printf("\nEnter the function parameters m , n , p , q \n");
+			scanf("%f %f %f %f", &m, &n, &p, &q);
+		} 
+	printf("\n\nInput h, [a,b], y[0] \n");
+	scanf("%f %f %f %f", &h, &a, &b, &y[0]);
+	k=(b-a)/h;
+	for(i=0;i<=int(k);i++)
+		{
+			x[i]=a+(i*h);
+		}
+	if(j==1)
+		{
+			y[1]=y[0]+h*(m*pow(x[0],p)*pow(y[0],q));
+			for(i=2;i<=int(k);i++)
+				{
+					y[i]=y[i-2]+(2*h*(m*pow(x[i-1],p)*pow(y[i-1],q)));
+				}	
+			printf("\nThe solution of the IVP is ( %f , %f ) ",x[int(k)],y[int(k)]);
+		}
+	else
+		{
+			y[1]=y[0]+h*((m*pow(x[0],p))+(n*pow(y[0],q)));
+			for(i=2;i<=int(k);i++)
+				{
+					y[i]=y[i-2]+(2*h*((m*pow(x[i-1],p))+(n*pow(y[i-1],q))));
+				}	
+			printf("\nThe solution of the IVP is ( %f , %f ) ",x[int(k)],y[int(k)]);
+		 }
+	printf("\n\n Do you want to continue (y/n) : ");
+	getchar();
+	}while(getchar()=='y');
+}

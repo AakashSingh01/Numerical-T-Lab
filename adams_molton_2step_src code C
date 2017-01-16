@@ -1,0 +1,45 @@
+/*program to calculate the function values of u'=-2*t*u*u at nodal points by Adams-Moulton 2-step method of order 3*/
+/program is coded in C/
+/value of h is taken as 0.1 and calculations done for region (0,1)/
+/coded by Vivek Chowdhary - 06CH1035/
+
+#include<stdio.h>
+#include<conio.h>
+
+int main()
+{
+    float h=0.1,t=0;
+    double u0=1,u1,u2,u3,f0,f1,f2,u; /* f0,f1,f2 represent the function inputs at three consecutive nodal points */
+    int g=0,n=1;
+    
+    f0=-2*t*u0*u0;
+    u1=u0+h*f0;
+    printf("\n u(%.2f)=%f",t+h,u1);
+    
+    while(t<0.9)
+    {
+                u2=u1;
+                while(!g)
+                {
+                           f0=-2*t*u0*u0;
+                           f1=-2*(t+h)*u1*u1;
+                           f2=-2*(t+2*h)*u2*u2;
+                           
+                           u3=u1+(h/12)*(5*f2+8*f1-f0);
+                           u=u3-u2;
+                           if(u<0)
+                                  u=-u;
+                           if(u<1e-10)  /*condition for error tolerance during iterations */
+                                         break;
+                           u2=u3;
+                           n++;
+                }
+                printf("\n\n u(%.2f)=%f, after %d iterations",t+2*h,u3,n);
+                u0=u1;
+                u1=u2;
+                t=t+h;
+                n=1;
+    }
+    getch();
+    return 0;
+}

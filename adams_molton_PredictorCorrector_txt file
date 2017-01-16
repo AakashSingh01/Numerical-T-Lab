@@ -1,0 +1,68 @@
+/*program to calculate the function values of u'=t*t(1+u) at nodal points by Adams-Moulton Predictor-Corrector method*/
+/coding in C/
+/coded by Vivek Chowdhary - 06CH1035/
+
+ #include<stdio.h>
+ #include<conio.h>
+ #include<math.h>
+
+ int main()
+ {
+     float t=1,h=0.1;
+     double u0=1,u1,u2,u3,u4p,u4c,u,f0,f1,f2,f3,f4;
+     float u01=2,u02=6,u03=18;
+     int n=1,m=1,g=0;
+     
+     while(n<4)
+     {
+               u=u0+(n*h)*u01+pow((n*h),2)*u02/2+pow((n*h),3)*u03/6;
+               if(n==1)
+                       u1=u;
+                       else if(n==2)
+                            u2=u;
+                            else u3=u;
+               printf("\n \n u(%.2f)=%f",t+n*h,u);
+               n++;
+     }
+    
+     while(t<1.7)
+     {
+               f0=pow(t,2)*(1+u0);
+               f1=pow((t+h),2)*(1+u1);
+               f2=pow((t+2*h),2)*(1+u2);
+               f3=pow((t+3*h),2)*(1+u3);
+               
+               u4p=u3+(h/24)*(55*f3-59*f2+37*f1-9*f0);
+               while(!g)
+               {
+                        f4=pow((t+4*h),2)*(1+u4p);
+                        u4c=u3+(h/24)*(9*f4+19*f3-5*f2+f1);
+                        
+                        u=u4c-u4p;
+                        if(u<0)
+                               u=-u;
+                        if(u<1e-5)
+                                  break;
+                        u4p=u4c;
+                        m++;
+               }
+               printf("\n\n u(%.2f)=%f, after %d iterations",t+4*h,u4c,m);
+               t=t+h;
+               u0=u1;
+               u1=u2;
+               u2=u3;
+               u3=u4c;
+               m=1;
+     }
+     getch();
+     return 0;
+     }
+
+
+
+     
+     
+
+ 
+     
+

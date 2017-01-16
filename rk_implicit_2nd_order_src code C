@@ -1,0 +1,46 @@
+/*program to calculate the function values of u'=-2*t*u*u at the nodal points by 2nd order implicit R-K method*/
+/coding in C/
+/value of h taken as 0.05/
+/coded by Vivek Chowdhary - 06CH1035/
+
+
+#include<stdio.h>
+#include<conio.h>
+
+int main()
+{
+    double f,k,k1,d,u=1,p,q;
+    float t=0,h=0.05;
+    int f1=0,n=1;
+    
+    while(t<1)
+    {
+                f=-2*t*u*u;
+                k=h*f;
+                while(!f1) /* loop to carry out the iterations to find out the solution of the implicit function 
+                              by Newton-Raphson method */
+                {
+                          p=k+h*(2*t+h)*(u+k/2)*(u+k/2);
+                          q=1+h*(2*t+h)*(u+k/2);
+                          k1=k-p/q;
+                          
+                          d=k1-k;
+                          if(d<0)
+                                 d=-d;
+                          if(d<1e-7)
+                                         break; 
+                          k=k1;
+                          n++;
+                }
+                u=u+k1;
+                printf("\n\n u(%.2f)=%f, after %d iterations",t+h,u,n);
+                t=t+h;
+                n=1;
+    }
+    getch();
+    return 0;
+}
+
+
+    
+    
